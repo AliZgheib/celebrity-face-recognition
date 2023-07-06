@@ -34,13 +34,14 @@ function App() {
       if (!file) {
         return setError("Image not found.");
       }
+      setError(null)
       setIsLoading(true);
       const fileBase64 = await convertFileToBase64(file);
 
       const fileNameClean = fileBase64.split("base64,")[1];
 
       const rawResponse = await fetch(
-        "http://API_URL/dev/rekognition",
+        "https://XXX.execute-api.us-east-1.amazonaws.com/dev/rekognition",
         {
           method: "POST",
           headers: {

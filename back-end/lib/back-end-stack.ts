@@ -6,6 +6,7 @@ import * as path from "path";
 import * as apigateway from "aws-cdk-lib/aws-apigateway";
 import * as lambda from "aws-cdk-lib/aws-lambda";
 import * as iam from "aws-cdk-lib/aws-iam";
+import { Duration } from "aws-cdk-lib";
 
 export class BackEndStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -40,6 +41,7 @@ export class BackEndStack extends cdk.Stack {
       runtime: lambda.Runtime.NODEJS_18_X,
       handler: "index.main",
       code: lambda.Code.fromAsset(path.join(__dirname, "/../src/rekognition")),
+      timeout: Duration.seconds(10),
     });
 
     // 👇 create a policy statement
