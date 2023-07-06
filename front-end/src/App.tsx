@@ -53,10 +53,11 @@ function App() {
       const content = await rawResponse.json();
 
       setCelebtritiesData(content);
-      setIsLoading(false);
       setShowModal(true);
     } catch (error) {
       setError("Image is invalid or too large.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
