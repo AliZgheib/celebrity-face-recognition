@@ -1,149 +1,201 @@
 # Celebrity Face Recognition - Frontend
 
-A modern, responsive Next.js application for identifying celebrities in uploaded images using AWS Rekognition.
 
-## 📋 Overview
 
-This frontend provides an intuitive user interface for uploading images and displaying celebrity recognition results. Built with Next.js 15, React 19, and Tailwind CSS 4.
+A modern Next.js application for identifying celebrities in uploaded images using AWS Rekognition.A modern, responsive Next.js application for identifying celebrities in uploaded images using AWS Rekognition.
 
-## ✨ Features
 
-- **Image Upload**: Drag-and-drop or click to upload
-- **Real-time Preview**: See your image before processing
-- **Loading States**: Visual feedback during processing
-- **Results Display**: Celebrity names with confidence scores
-- **Responsive Design**: Works seamlessly on desktop and mobile
+
+Built with **Next.js 15**, **React 19**, and **Tailwind CSS 4**.## 📋 Overview
+
+
+
+## ✨ FeaturesThis frontend provides an intuitive user interface for uploading images and displaying celebrity recognition results. Built with Next.js 15, React 19, and Tailwind CSS 4.
+
+
+
+- Image upload with drag-and-drop## ✨ Features
+
+- Real-time image preview
+
+- Celebrity recognition with confidence scores- **Image Upload**: Drag-and-drop or click to upload
+
+- Responsive design (mobile & desktop)- **Real-time Preview**: See your image before processing
+
+- Error handling and validation- **Loading States**: Visual feedback during processing
+
+- File size limit: 5MB- **Results Display**: Celebrity names with confidence scores
+
+- Supported formats: PNG, JPEG, JPG- **Responsive Design**: Works seamlessly on desktop and mobile
+
 - **Error Handling**: User-friendly error messages
-- **File Validation**: 
-  - Max file size: 5MB
-  - Supported formats: PNG, JPEG, JPG
 
-## 🚀 Getting Started
+## 🚀 Getting Started- **File Validation**: 
+
+  - Max file size: 5MB
+
+### Prerequisites  - Supported formats: PNG, JPEG, JPG
+
+
+
+- Node.js 22.x or higher## 🚀 Getting Started
+
+- Backend API deployed (see [back-end README](../back-end/README.md))
 
 ### Prerequisites
 
+### Installation
+
 - Node.js 22.x or higher
-- npm, yarn, pnpm, or bun
-- Backend API deployed and running (see [back-end README](../back-end/README.md))
+
+```bash- npm, yarn, pnpm, or bun
+
+npm install- Backend API deployed and running (see [back-end README](../back-end/README.md))
+
+```
 
 ### Installation
 
+### Configuration
+
 ```bash
-# Install dependencies
+
+Create a `.env.local` file:# Install dependencies
+
 npm install
-# or
-yarn install
-# or
+
+```env# or
+
+NEXT_PUBLIC_API_URL=https://your-api-id.execute-api.region.amazonaws.com/dev/rekognitionyarn install
+
+```# or
+
 pnpm install
-```
 
-### Development Server
+Get your API URL from the backend deployment output and add `/rekognition` to the end.```
 
-```bash
-npm run dev
-# or
+
+
+### Run Development Server### Development Server
+
+
+
+```bash```bash
+
+npm run devnpm run dev
+
+```# or
+
 yarn dev
-# or
+
+Open [http://localhost:3000](http://localhost:3000)# or
+
 pnpm dev
-# or
+
+## 🛠️ Scripts# or
+
 bun dev
+
+```bash```
+
+npm run dev          # Start development server
+
+npm run build        # Build for productionOpen [http://localhost:3000](http://localhost:3000) with your browser to see the application.
+
+npm run start        # Start production server
+
+npm run lint         # Run ESLintThe page will auto-reload when you make changes to the code.
+
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the application.
-
-The page will auto-reload when you make changes to the code.
 
 ## 🔧 Configuration
 
+## 📤 Deployment
+
 ### Environment Variables
+
+### Vercel (Recommended)
 
 Create a `.env.local` file in the root of the `front-end` directory:
 
-```env
-NEXT_PUBLIC_API_URL=https://your-api-gateway-url.execute-api.region.amazonaws.com/dev/rekognition
-```
+1. Push to GitHub
+
+2. Import to [Vercel](https://vercel.com/new)```env
+
+3. Set root directory to `front-end`NEXT_PUBLIC_API_URL=https://your-api-gateway-url.execute-api.region.amazonaws.com/dev/rekognition
+
+4. Add environment variable: `NEXT_PUBLIC_API_URL````
+
+5. Deploy
 
 **Important**: Replace `your-api-gateway-url` with the actual API Gateway URL from your backend deployment.
 
-You can also copy the `.env.example` file:
-```bash
-cp .env.example .env.local
-```
+### Other Options
 
-Then edit `.env.local` with your actual API URL.
+- AWS AmplifyYou can also copy the `.env.example` file:
 
-### Getting Your API URL
+- Netlify```bash
 
-After deploying the backend with `cdk deploy`, you'll see output like:
-```
+- Railwaycp .env.example .env.local
+
+- Render```
+
+
+
+## 🐛 TroubleshootingThen edit `.env.local` with your actual API URL.
+
+
+
+**API Connection Failed**### Getting Your API URL
+
+- Check backend is deployed
+
+- Verify API URL in `.env.local`After deploying the backend with `cdk deploy`, you'll see output like:
+
+- Check browser console for errors```
+
 Outputs:
-BackEndStack.apiUrl = https://qklryfviw3.execute-api.us-east-1.amazonaws.com/dev/
-```
+
+**Image Not Uploading**BackEndStack.apiUrl = https://qklryfviw3.execute-api.us-east-1.amazonaws.com/dev/
+
+- Check file size (<5MB)```
+
+- Verify format (PNG, JPEG, JPG)
 
 Add `/rekognition` to the end of this URL for the `NEXT_PUBLIC_API_URL` value:
-```env
-NEXT_PUBLIC_API_URL=https://qklryfviw3.execute-api.us-east-1.amazonaws.com/dev/rekognition
+
+**Build Errors**```env
+
+```bashNEXT_PUBLIC_API_URL=https://qklryfviw3.execute-api.us-east-1.amazonaws.com/dev/rekognition
+
+rm -rf .next node_modules```
+
+npm install
+
+npm run build## ️ Scripts
+
 ```
-
-## 📁 Project Structure
-
-```
-front-end/
-├── app/
-│   ├── page.tsx         # Main page component (image upload & results)
-│   ├── layout.tsx       # Root layout with metadata
-│   ├── globals.css      # Global styles and Tailwind imports
-│   └── favicon.ico      # App favicon
-├── public/              # Static assets
-├── .next/              # Next.js build output (gitignored)
-├── node_modules/       # Dependencies (gitignored)
-├── next.config.ts      # Next.js configuration
-├── tsconfig.json       # TypeScript configuration
-├── tailwind.config.ts  # Tailwind CSS configuration
-├── postcss.config.mjs  # PostCSS configuration
-├── eslint.config.mjs   # ESLint configuration
-└── package.json        # Dependencies and scripts
-```
-
-## 🎨 Main Components
-
-### `app/page.tsx`
-
-The main page component includes:
-- **File Upload**: Drag-and-drop area with file input
-- **Image Preview**: Shows selected image before processing
-- **Submit Button**: Triggers API call to backend
-- **Results Modal**: Displays celebrity recognition results
-- **Error Handling**: Shows validation and API errors
-
-### Key Functions
-
-```typescript
-// Convert file to base64 for API transmission
-convertFileToBase64(file: File): Promise<string>
-
-// Handle form submission and API call
-handleSubmit(e: FormEvent)
-
-// Process and validate file selection
-handleFileChange(e: ChangeEvent<HTMLInputElement>)
-
-// Reset form to initial state
-handleReset()
-```
-
-## 🛠️ Scripts
 
 ```bash
-# Development
+
+## 📚 Learn More# Development
+
 npm run dev          # Start development server with Turbopack
 
-# Production
-npm run build        # Build for production with Turbopack
+- [Next.js Documentation](https://nextjs.org/docs)
+
+- [React Documentation](https://react.dev/)# Production
+
+- [Tailwind CSS](https://tailwindcss.com/docs)npm run build        # Build for production with Turbopack
+
 npm run start        # Start production server
 
+---
+
 # Code Quality
-npm run lint         # Run ESLint
+
+For complete project documentation, see the main [README.md](../README.md)npm run lint         # Run ESLint
+
 ```
 
 ## 🎨 Styling
