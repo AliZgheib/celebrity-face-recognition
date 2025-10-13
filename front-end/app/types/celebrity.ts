@@ -5,7 +5,17 @@ export interface CelebrityFace {
   MatchConfidence?: number;
 }
 
+export interface UnrecognizedFace {
+  BoundingBox?: {
+    Width?: number;
+    Height?: number;
+    Left?: number;
+    Top?: number;
+  };
+  Confidence?: number;
+}
+
 export interface CelebritiesData {
   celebrityFaces: CelebrityFace[];
-  unrecognizedFaces: any[];
+  unrecognizedFaces: UnrecognizedFace[];
 }

@@ -1,15 +1,9 @@
 import React from "react";
-
-interface CelebrityFace {
-  Name: string;
-  Id?: string;
-  Confidence?: number;
-  MatchConfidence?: number;
-}
+import { CelebrityFace, UnrecognizedFace } from "../types/celebrity";
 
 interface CelebritiesData {
   celebrityFaces: CelebrityFace[];
-  unrecognizedFaces: any[];
+  unrecognizedFaces: UnrecognizedFace[];
 }
 
 interface ResultsModalProps {
@@ -17,15 +11,14 @@ interface ResultsModalProps {
   onClose: () => void;
 }
 
-export const ResultsModal: React.FC<ResultsModalProps> = ({ data, onClose }) => {
+export const ResultsModal: React.FC<ResultsModalProps> = ({
+  data,
+  onClose,
+}) => {
   return (
     <div className="modal" role="dialog" aria-modal="true">
       <div className="modal-content">
-        <button
-          className="close"
-          onClick={onClose}
-          aria-label="Close modal"
-        >
+        <button className="close" onClick={onClose} aria-label="Close modal">
           &times;
         </button>
 
