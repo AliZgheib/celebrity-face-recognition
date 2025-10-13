@@ -51,6 +51,11 @@ export default function Home() {
       return setError("Please select an image file.");
     }
 
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+    if (!apiUrl) {
+      return setError("API URL is not configured. Please check your environment variables.");
+    }
+
     try {
       setError(null);
       setIsLoading(true);
@@ -58,29 +63,34 @@ export default function Home() {
       const fileBase64 = await convertFileToBase64(file);
       const base64Data = fileBase64.split("base64,")[1];
 
-      const rawResponse = await fetch(
-        "https://XXX.execute-api.us-east-1.amazonaws.com/dev/rekognition",
-        {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ imageBase64: base64Data }),
-        }
-      );
+      const rawResponse = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ imageBase64: base64Data }),
+      });
+
+      console.log("Response status:", rawResponse.status);
+      console.log("Response headers:", rawResponse.headers);
 
       if (!rawResponse.ok) {
-        throw new Error(`HTTP error! status: ${rawResponse.status}`);
+        const errorText = await rawResponse.text();
+        console.error("Error response:", errorText);
+        throw new Error(`HTTP error! status: ${rawResponse.status}, body: ${errorText}`);
       }
 
       const content = await rawResponse.json();
+      console.log("Success response:", content);
       setCelebritiesData(content);
       setShowModal(true);
     } catch (error) {
       console.error("Error submitting image:", error);
       setError(
-        "Failed to analyze image. Please try again with a different image."
+        error instanceof Error 
+          ? `Failed to analyze image: ${error.message}` 
+          : "Failed to analyze image. Please try again with a different image."
       );
     } finally {
       setIsLoading(false);

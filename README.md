@@ -141,8 +141,11 @@ cd front-end
 # Install dependencies
 npm install
 
-# Update the API endpoint in your code
-# Edit app/page.tsx and replace the API_URL with your deployed endpoint
+# Create environment file
+cp .env.example .env.local
+
+# Edit .env.local and add your API Gateway URL
+# NEXT_PUBLIC_API_URL=https://your-api-id.execute-api.region.amazonaws.com/dev/rekognition
 
 # Run the development server
 npm run dev
@@ -178,7 +181,7 @@ The frontend can be deployed to various platforms:
 1. Push your code to GitHub
 2. Import the project in [Vercel](https://vercel.com)
 3. Set the root directory to `front-end`
-4. Add environment variable: `NEXT_PUBLIC_API_URL=<your-api-gateway-url>`
+4. Add environment variable: `NEXT_PUBLIC_API_URL=<your-api-gateway-url>/rekognition`
 5. Deploy
 
 #### AWS Amplify
@@ -204,8 +207,15 @@ amplify publish
 Create a `.env.local` file in the `front-end` directory:
 
 ```env
-NEXT_PUBLIC_API_URL=https://your-api-gateway-url.execute-api.region.amazonaws.com/dev
+NEXT_PUBLIC_API_URL=https://your-api-gateway-url.execute-api.region.amazonaws.com/dev/rekognition
 ```
+
+**Example with your deployed API:**
+```env
+NEXT_PUBLIC_API_URL=https://qklryfviw3.execute-api.us-east-1.amazonaws.com/dev/rekognition
+```
+
+**Note:** Make sure to append `/rekognition` to the end of your API Gateway URL.
 
 ### Backend
 

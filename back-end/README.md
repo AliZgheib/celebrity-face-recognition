@@ -77,6 +77,11 @@ BackEndStack.apiUrl = https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/dev
 
 **Save this URL** - you'll need it for the frontend configuration.
 
+**For the frontend `.env.local` file, append `/rekognition` to this URL:**
+```env
+NEXT_PUBLIC_API_URL=https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/dev/rekognition
+```
+
 ## 🗑️ Cleanup
 
 ```bash

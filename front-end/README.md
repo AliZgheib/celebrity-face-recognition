@@ -60,17 +60,29 @@ The page will auto-reload when you make changes to the code.
 Create a `.env.local` file in the root of the `front-end` directory:
 
 ```env
-NEXT_PUBLIC_API_URL=https://your-api-gateway-url.execute-api.region.amazonaws.com/dev
+NEXT_PUBLIC_API_URL=https://your-api-gateway-url.execute-api.region.amazonaws.com/dev/rekognition
 ```
 
 **Important**: Replace `your-api-gateway-url` with the actual API Gateway URL from your backend deployment.
 
-### API Endpoint Configuration
+You can also copy the `.env.example` file:
+```bash
+cp .env.example .env.local
+```
 
-The API endpoint is configured in `app/page.tsx`. Update the `API_URL` constant with your deployed backend URL:
+Then edit `.env.local` with your actual API URL.
 
-```typescript
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
+### Getting Your API URL
+
+After deploying the backend with `cdk deploy`, you'll see output like:
+```
+Outputs:
+BackEndStack.apiUrl = https://qklryfviw3.execute-api.us-east-1.amazonaws.com/dev/
+```
+
+Add `/rekognition` to the end of this URL for the `NEXT_PUBLIC_API_URL` value:
+```env
+NEXT_PUBLIC_API_URL=https://qklryfviw3.execute-api.us-east-1.amazonaws.com/dev/rekognition
 ```
 
 ## 📁 Project Structure
