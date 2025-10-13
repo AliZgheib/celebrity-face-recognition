@@ -32,19 +32,19 @@ A full-stack application that uses AWS Rekognition to identify celebrities in up
 ## 🏗️ Architecture
 
 ```
-┌─────────────┐         ┌──────────────┐         ┌─────────────┐
-│             │         │              │         │             │
-│  Next.js    │────────▶│  API Gateway │────────▶│   Lambda    │
-│  Frontend   │  HTTPS  │              │  Event  │  Function   │
-│             │◀────────│              │◀────────│             │
-└─────────────┘         └──────────────┘         └─────┬───────┘
-                                                        │
-                                                        │
-                                                        ▼
-                                                 ┌─────────────┐
-                                                 │     AWS     │
-                                                 │ Rekognition │
-                                                 └─────────────┘
+┌─────────────┐         ┌─────────────┐         ┌─────────────┐
+│             │         │             │         │             │
+│  Next.js    │-------->│ API Gateway │-------->│   Lambda    │
+│  Frontend   │  HTTPS  │             │  Event  │  Function   │
+│             │<--------│             │<--------│             │
+└─────────────┘         └─────────────┘         └──────┬──────┘
+                                                       │
+                                                       │
+                                                       ▼
+                                                ┌─────────────┐
+                                                │     AWS     │
+                                                │ Rekognition │
+                                                └─────────────┘
 ```
 
 ### Components:
@@ -238,71 +238,6 @@ No environment variables needed - IAM roles are automatically configured by CDK.
 - **[TypeScript](https://www.typescriptlang.org/)** - Type safety
 - **[Jest](https://jestjs.io/)** - Testing framework
 
-## 📝 API Documentation
-
-### Endpoint: `GET /rekognition`
-
-#### Request
-
-Query parameter or request body:
-```json
-{
-  "imageBase64": "base64-encoded-image-string"
-}
-```
-
-#### Response (Success - 200)
-
-```json
-{
-  "celebrityFaces": [
-    {
-      "Name": "Celebrity Name",
-      "Id": "celebrity-id",
-      "Confidence": 99.5,
-      "MatchConfidence": 98.7
-    }
-  ],
-  "unrecognizedFaces": []
-}
-```
-
-#### Response (Error - 400)
-
-```json
-{
-  "message": "Error message"
-}
-```
-
-## 🧪 Testing
-
-### Backend Tests
-
-```bash
-cd back-end
-npm test
-```
-
-### Frontend Development
-
-```bash
-cd front-end
-npm run dev     # Development server
-npm run build   # Production build
-npm run lint    # Run ESLint
-```
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
 ## 📄 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
@@ -313,30 +248,11 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 - GitHub: [@AliZgheib](https://github.com/AliZgheib)
 
-## 🙏 Acknowledgments
-
-- AWS Rekognition for the celebrity recognition API
-- Next.js team for the amazing framework
-- AWS CDK team for infrastructure as code tools
-
-## 📸 Screenshots
-
-*Add screenshots of your application here*
-
 ## 🐛 Known Issues
 
-- Maximum image size: 5MB (AWS Rekognition limitation)
+- Maximum image size: 5MB
 - Supported formats: PNG, JPEG, JPG
 - API Gateway timeout: 29 seconds
-
-## 🗺️ Roadmap
-
-- [ ] Add support for batch image processing
-- [ ] Implement image history/gallery
-- [ ] Add facial attribute analysis
-- [ ] Support for video processing
-- [ ] User authentication
-- [ ] Dark mode support
 
 ## 💡 Tips
 

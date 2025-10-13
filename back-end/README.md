@@ -99,24 +99,6 @@ cdk destroy
 * `cdk synth` - Emit the synthesized CloudFormation template
 * `cdk destroy` - Remove all stack resources from AWS
 
-## 📁 Project Structure
-
-```
-back-end/
-├── bin/
-│   └── back-end.ts          # CDK app entry point
-├── lib/
-│   └── back-end-stack.ts    # Stack definition (API Gateway, Lambda, IAM)
-├── src/
-│   └── rekognition/
-│       └── index.ts         # Lambda function handler
-├── test/
-│   └── back-end.test.ts     # Unit tests
-├── cdk.json                 # CDK configuration
-├── tsconfig.json            # TypeScript configuration
-└── package.json             # Dependencies and scripts
-```
-
 ## 🔌 Lambda Function
 
 ### Handler: `src/rekognition/index.ts`
@@ -252,16 +234,6 @@ cdk deploy        # Apply changes
 - [AWS Rekognition Documentation](https://docs.aws.amazon.com/rekognition/)
 - [AWS Lambda Documentation](https://docs.aws.amazon.com/lambda/)
 - [API Gateway Documentation](https://docs.aws.amazon.com/apigateway/)
-
-## 🤝 Contributing
-
-When making changes to the infrastructure:
-
-1. Update the TypeScript code
-2. Run `npm run build` to compile
-3. Test with `npm test`
-4. Review changes with `cdk diff`
-5. Deploy with `cdk deploy`
 
 ## 📝 Notes
 
