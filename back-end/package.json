@@ -1,6 +1,7 @@
 {
-  "name": "back-end",
+  "name": "celebrity-face-recognition-backend",
   "version": "0.1.0",
+  "description": "Celebrity Face Recognition - Backend infrastructure using AWS CDK",
   "bin": {
     "back-end": "bin/back-end.js"
   },

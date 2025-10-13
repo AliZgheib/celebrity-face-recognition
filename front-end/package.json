@@ -1,6 +1,7 @@
 {
-  "name": "front-end",
+  "name": "celebrity-face-recognition-frontend",
   "version": "0.1.0",
+  "description": "Celebrity Face Recognition - Frontend application using Next.js",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
