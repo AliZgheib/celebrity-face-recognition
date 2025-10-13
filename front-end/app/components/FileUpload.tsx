@@ -5,6 +5,7 @@ interface FileUploadProps {
   previewUrl: string | null;
   isLoading: boolean;
   onFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onPreviewClick?: () => void;
 }
 
 export const FileUpload: React.FC<FileUploadProps> = ({
@@ -12,6 +13,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
   previewUrl,
   isLoading,
   onFileChange,
+  onPreviewClick,
 }) => {
   return (
     <div className="drop_box">
@@ -38,9 +40,46 @@ export const FileUpload: React.FC<FileUploadProps> = ({
           <p>Supported formats: PNG, JPG (Max 5MB)</p>
         </>
       ) : (
-        <div className="preview-container">
-          <img src={previewUrl} alt="Preview" className="image-preview" />
+        <div className="preview-info-container">
+          <div className="file-selected-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="48"
+              height="48"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+              <polyline points="22 4 12 14.01 9 11.01" />
+            </svg>
+          </div>
           <p className="file-name">{file?.name}</p>
+          <button
+            type="button"
+            onClick={onPreviewClick}
+            className="preview-button"
+            disabled={isLoading}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+            View Full Image
+          </button>
         </div>
       )}
 

@@ -31,17 +31,19 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: var(--color-text);
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
 }
 
 /* Container */
 .container {
-  min-height: 100vh;
+  height: 100vh;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 2rem;
+  overflow: hidden;
 }
 
 /* Card */
@@ -50,9 +52,34 @@ body {
   box-shadow: var(--shadow-xl);
   width: 100%;
   max-width: 700px;
+  max-height: calc(100vh - 4rem);
   background-color: var(--color-surface);
   padding: 2.5rem;
   animation: fadeInUp 0.6s ease-out;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  overflow-y: auto;
+}
+
+/* Custom scrollbar for card */
+.card::-webkit-scrollbar {
+  width: 10px;
+}
+
+.card::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 0 var(--border-radius) var(--border-radius) 0;
+}
+
+.card::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 5px;
+  transition: background 0.2s;
+}
+
+.card::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-light);
 }
 
 @keyframes fadeInUp {
@@ -68,7 +95,7 @@ body {
 
 .card-header {
   text-align: center;
-  margin-bottom: 2rem;
+  flex-shrink: 0;
 }
 
 .card-title {
@@ -89,17 +116,18 @@ body {
 
 /* Drop Box */
 .drop_box {
-  margin: 1.5rem 0;
-  padding: 3rem 2rem;
+  padding: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  gap: 1.25rem;
   border: 2px dashed var(--color-border);
   border-radius: var(--border-radius);
   background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
   transition: var(--transition);
-  min-height: 300px;
+  min-height: 260px;
+  flex-shrink: 0;
 }
 
 .drop_box:hover {
@@ -139,15 +167,78 @@ body {
 .preview-container {
   width: 100%;
   text-align: center;
+  max-height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .image-preview {
   max-width: 100%;
-  max-height: 300px;
+  max-height: 200px;
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-md);
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
   object-fit: contain;
+}
+
+/* Preview Info Container (when file is selected) */
+.preview-info-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.file-selected-icon {
+  color: var(--color-success);
+  animation: scaleIn 0.4s ease-out;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.preview-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--color-surface);
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--border-radius);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+}
+
+.preview-button:hover:not(:disabled) {
+  background: var(--color-primary);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.preview-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.preview-button svg {
+  flex-shrink: 0;
 }
 
 .file-name {
@@ -160,6 +251,7 @@ body {
 /* Form */
 .upload-form {
   width: 100%;
+  flex-shrink: 0;
 }
 
 .form {
@@ -298,7 +390,7 @@ body {
   top: 0;
   width: 100%;
   height: 100%;
-  overflow-y: auto;
+  overflow: hidden;
   background-color: rgba(0, 0, 0, 0.75);
   display: flex;
   align-items: center;
@@ -323,11 +415,13 @@ body {
   border-radius: var(--border-radius);
   width: 100%;
   max-width: 600px;
-  max-height: 80vh;
-  overflow-y: auto;
+  max-height: calc(100vh - 4rem);
+  overflow: hidden;
   box-shadow: var(--shadow-xl);
   position: relative;
   animation: slideIn 0.4s ease-out;
+  display: flex;
+  flex-direction: column;
 }
 
 @keyframes slideIn {
@@ -370,11 +464,16 @@ body {
 
 .modal-actual-content {
   padding-top: 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .modal-header {
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   text-align: center;
+  flex-shrink: 0;
 }
 
 .modal-title {
@@ -385,7 +484,10 @@ body {
 
 /* Results Section */
 .results-section {
-  margin-bottom: 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .results-count {
@@ -396,10 +498,11 @@ body {
   padding: 1rem;
   background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
   border-radius: var(--border-radius);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   color: var(--color-primary);
   font-weight: 600;
   font-size: 1.125rem;
+  flex-shrink: 0;
 }
 
 .celebrity-list {
@@ -407,6 +510,29 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+  flex: 1;
+}
+
+/* Custom scrollbar for celebrity list */
+.celebrity-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.celebrity-list::-webkit-scrollbar-track {
+  background: var(--color-background);
+  border-radius: 4px;
+}
+
+.celebrity-list::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.celebrity-list::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-light);
 }
 
 .celebrity-item {
@@ -465,8 +591,10 @@ body {
 
 /* Unrecognized Section */
 .unrecognized-section {
-  padding-top: 1.5rem;
+  padding-top: 1rem;
+  margin-top: 1rem;
   border-top: 1px solid var(--color-border);
+  flex-shrink: 0;
 }
 
 .unrecognized-text {
@@ -479,6 +607,60 @@ body {
   text-align: center;
 }
 
+/* Preview Modal */
+.preview-modal-content {
+  background-color: var(--color-surface);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  width: 100%;
+  max-width: 90vw;
+  max-height: calc(100vh - 4rem);
+  overflow: hidden;
+  box-shadow: var(--shadow-xl);
+  position: relative;
+  animation: slideIn 0.4s ease-out;
+  display: flex;
+  flex-direction: column;
+}
+
+.preview-modal-header {
+  margin-bottom: 1.5rem;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.preview-modal-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 0.5rem;
+}
+
+.preview-modal-filename {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  word-break: break-all;
+}
+
+.preview-modal-body {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+  padding: 1rem;
+  background: var(--color-background);
+  border-radius: var(--border-radius);
+}
+
+.preview-modal-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-lg);
+}
+
 /* Responsive */
 @media (max-width: 640px) {
   .container {
@@ -487,6 +669,8 @@ body {
 
   .card {
     padding: 1.5rem;
+    max-height: calc(100vh - 2rem);
+    gap: 1rem;
   }
 
   .card-title {
@@ -498,8 +682,9 @@ body {
   }
 
   .drop_box {
-    padding: 2rem 1rem;
-    min-height: 250px;
+    padding: 1.5rem 1rem;
+    min-height: 220px;
+    gap: 1rem;
   }
 
   .button-group {
@@ -512,10 +697,27 @@ body {
 
   .modal-content {
     padding: 1.5rem;
-    max-height: 90vh;
+    max-height: calc(100vh - 2rem);
   }
 
   .modal-title {
     font-size: 1.5rem;
+  }
+
+  .preview-container {
+    max-height: 180px;
+  }
+
+  .image-preview {
+    max-height: 150px;
+  }
+
+  .preview-modal-content {
+    max-width: 95vw;
+    padding: 1.5rem;
+  }
+
+  .preview-modal-title {
+    font-size: 1.25rem;
   }
 }
