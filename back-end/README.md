@@ -11,13 +11,13 @@ This backend provides a REST API endpoint that accepts base64-encoded images and
 The CDK stack deploys:
 
 - **API Gateway**: REST API with CORS enabled for cross-origin requests
-- **Lambda Function**: Node.js 18.x function that processes images
+- **Lambda Function**: Node.js 22.x function that processes images
 - **IAM Roles & Policies**: Permissions for Lambda to access Rekognition
 - **CloudFormation**: All resources are provisioned via Infrastructure as Code
 
 ## 📦 Prerequisites
 
-- **Node.js** 18.x or higher
+- **Node.js** 22.x or higher
 - **AWS CLI** configured with credentials
 - **AWS CDK CLI**: `npm install -g aws-cdk`
 - **AWS Account** with appropriate permissions:
@@ -157,8 +157,8 @@ The IAM policy is automatically created and attached by the CDK stack.
 
 ### Lambda Settings
 
-- **Runtime**: Node.js 18.x
-- **Timeout**: 10 seconds
+- **Runtime**: Node.js 22.x
+- **Timeout**: 29 seconds
 - **Memory**: 128 MB (default)
 - **Handler**: `index.main`
 
@@ -168,6 +168,7 @@ The IAM policy is automatically created and attached by the CDK stack.
 - **CORS**: Enabled for all origins (`*`)
 - **Allowed Methods**: GET, POST, PUT, PATCH, DELETE, OPTIONS
 - **Allowed Headers**: Content-Type, X-Amz-Date, Authorization, X-Api-Key
+- **Primary Endpoint**: GET `/rekognition`
 
 ## 🧪 Testing
 
@@ -201,9 +202,9 @@ aws sts get-caller-identity
 
 ### Lambda Timeout
 
-If images are large or processing is slow, increase the timeout in `lib/back-end-stack.ts`:
+If images are large or processing is slow, the timeout is set to 29 seconds (maximum for API Gateway). You can adjust this in `lib/back-end-stack.ts`:
 ```typescript
-timeout: Duration.seconds(30)  // Increase from 10 to 30
+timeout: Duration.seconds(29)  // Current setting (API Gateway max: 29s)
 ```
 
 ### CORS Issues

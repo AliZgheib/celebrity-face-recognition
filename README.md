@@ -52,7 +52,7 @@ A full-stack application that uses AWS Rekognition to identify celebrities in up
 - **Frontend**: Next.js 15 with React 19, TypeScript, and Tailwind CSS
 - **Backend**: AWS CDK stack deploying:
   - API Gateway REST API with CORS enabled
-  - Lambda function (Node.js 18.x runtime)
+  - Lambda function (Node.js 22.x runtime)
   - IAM roles and policies for Rekognition access
 - **AI Service**: AWS Rekognition for celebrity detection
 
@@ -60,7 +60,7 @@ A full-stack application that uses AWS Rekognition to identify celebrities in up
 
 Before you begin, ensure you have the following installed:
 
-- **Node.js** (v18 or higher)
+- **Node.js** (v22 or higher)
 - **npm** or **yarn**
 - **AWS CLI** configured with appropriate credentials
 - **AWS CDK CLI** (`npm install -g aws-cdk`)
@@ -230,10 +230,11 @@ No environment variables needed - IAM roles are automatically configured by CDK.
 
 ## 📝 API Documentation
 
-### Endpoint: `POST /rekognition`
+### Endpoint: `GET /rekognition`
 
 #### Request
 
+Query parameter or request body:
 ```json
 {
   "imageBase64": "base64-encoded-image-string"
@@ -316,7 +317,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 - Maximum image size: 5MB (AWS Rekognition limitation)
 - Supported formats: PNG, JPEG, JPG
-- API Gateway timeout: 10 seconds
+- API Gateway timeout: 29 seconds
 
 ## 🗺️ Roadmap
 

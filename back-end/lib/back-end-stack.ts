@@ -38,10 +38,10 @@ export class BackEndStack extends cdk.Stack {
 
     // 👇 define the lambda function
     const rekognitionLambda = new lambda.Function(this, "rekognition-lambda", {
-      runtime: lambda.Runtime.NODEJS_18_X,
+      runtime: lambda.Runtime.NODEJS_22_X,
       handler: "index.main",
       code: lambda.Code.fromAsset(path.join(__dirname, "/../src/rekognition")),
-      timeout: Duration.seconds(10),
+      timeout: Duration.seconds(29),
     });
 
     // 👇 create a policy statement
@@ -60,9 +60,9 @@ export class BackEndStack extends cdk.Stack {
     // 👇 add a /rekognition resource
     const rekognitionResource = api.root.addResource("rekognition");
 
-    // 👇 integrate GET /rekognition with rekognitionLambda
+    // 👇 integrate POST /rekognition with rekognitionLambda
     rekognitionResource.addMethod(
-      "GET",
+      "POST",
       new apigateway.LambdaIntegration(rekognitionLambda, { proxy: true })
     );
   }

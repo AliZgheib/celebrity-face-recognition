@@ -22,7 +22,7 @@ This frontend provides an intuitive user interface for uploading images and disp
 
 ### Prerequisites
 
-- Node.js 18.x or higher
+- Node.js 22.x or higher
 - npm, yarn, pnpm, or bun
 - Backend API deployed and running (see [back-end README](../back-end/README.md))
 
