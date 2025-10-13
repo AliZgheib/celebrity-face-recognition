@@ -2,9 +2,14 @@ import {
   RekognitionClient,
   RecognizeCelebritiesCommand,
 } from "@aws-sdk/client-rekognition";
+import { APIGatewayProxyEvent } from "aws-lambda";
 
-const baseHandler = async (event: any) => {
+const baseHandler = async (event: APIGatewayProxyEvent) => {
   try {
+    if (!event.body) {
+      return new Error("body is required");
+    }
+
     const { imageBase64 } = JSON.parse(event.body);
 
     console.log("imageBase64", imageBase64);
@@ -16,7 +21,7 @@ const baseHandler = async (event: any) => {
 
     const { CelebrityFaces, UnrecognizedFaces } = await rekognitionClient.send(
       new RecognizeCelebritiesCommand({
-        Image: { Bytes: Buffer.from(imageBase64, "base64") },
+        Image: { Bytes: Uint8Array.from(Buffer.from(imageBase64, "base64")) },
       })
     );
     return {
