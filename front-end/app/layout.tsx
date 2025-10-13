@@ -13,8 +13,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Celebrities Face Recognition",
-  description: "Celebrities Face Recognition",
+  title: "Celebrity Face Recognition",
+  description: "Upload a photo to detect and identify celebrities using AWS Rekognition",
+  keywords: ["celebrity", "face recognition", "AWS Rekognition", "image analysis"],
+  openGraph: {
+    title: "Celebrity Face Recognition",
+    description: "Upload a photo to detect and identify celebrities using AWS Rekognition",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
