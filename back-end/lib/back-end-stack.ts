@@ -60,9 +60,9 @@ export class BackEndStack extends cdk.Stack {
     // 👇 add a /rekognition resource
     const rekognitionResource = api.root.addResource("rekognition");
 
-    // 👇 integrate POST /rekognition with rekognitionLambda
+    // 👇 integrate GET /rekognition with rekognitionLambda
     rekognitionResource.addMethod(
-      "POST",
+      "GET",
       new apigateway.LambdaIntegration(rekognitionLambda, { proxy: true })
     );
   }
