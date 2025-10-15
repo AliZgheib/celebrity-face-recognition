@@ -14,7 +14,7 @@ const baseHandler = async (event: APIGatewayProxyEvent) => {
 
     console.log("imageBase64", imageBase64);
 
-    if (!imageBase64) {
+    if (!imageBase64 || typeof imageBase64 !== "string") {
       return new Error("imageBase64 is a required");
     }
     const rekognitionClient = new RekognitionClient({});
@@ -38,7 +38,7 @@ const baseHandler = async (event: APIGatewayProxyEvent) => {
   }
 };
 
-const main = async (event: any) => {
+const main = async (event: APIGatewayProxyEvent) => {
   const response = await baseHandler(event);
 
   if (response instanceof Error) {
