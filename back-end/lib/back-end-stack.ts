@@ -14,21 +14,15 @@ export class BackEndStack extends cdk.Stack {
 
     // The code that defines your stack goes here
 
-    const api = new apigateway.RestApi(this, "my-api", {
+    const api = new apigateway.RestApi(this, "rekognition-api", {
       description: "api gateway",
       deployOptions: {
         stageName: "dev",
       },
       // 👇 enable CORS
       defaultCorsPreflightOptions: {
-        allowHeaders: [
-          "Content-Type",
-          "X-Amz-Date",
-          "Authorization",
-          "X-Api-Key",
-        ],
+        allowHeaders: ["Content-Type"],
         allowMethods: ["OPTIONS", "GET", "POST", "PUT", "PATCH", "DELETE"],
-        allowCredentials: true,
         allowOrigins: ["*"],
       },
     });
