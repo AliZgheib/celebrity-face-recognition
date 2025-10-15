@@ -19,16 +19,19 @@ const baseHandler = async (event: APIGatewayProxyEvent) => {
     }
     const rekognitionClient = new RekognitionClient({});
 
-    const { CelebrityFaces, UnrecognizedFaces } = await rekognitionClient.send(
-      new RecognizeCelebritiesCommand({
-        Image: { Bytes: Uint8Array.from(Buffer.from(imageBase64, "base64")) },
-      })
-    );
+    const command = new RecognizeCelebritiesCommand({
+      Image: { Bytes: Uint8Array.from(Buffer.from(imageBase64, "base64")) },
+    });
+
+    const response = await rekognitionClient.send(command);
+
+    const { CelebrityFaces, UnrecognizedFaces } = response;
+
     return {
       celebrityFaces: CelebrityFaces ? CelebrityFaces : [],
       unrecognizedFaces: UnrecognizedFaces ? UnrecognizedFaces : [],
     };
-  } catch (error: any) {
+  } catch (error) {
     console.log(error);
 
     return new Error("Something went wrong");
