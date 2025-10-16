@@ -10,28 +10,34 @@ export const analyzeCelebrities = async (
     return new Error("API URL is not configured.");
   }
 
-  // Convert file to base64
-  const fileBase64 = await convertFileToBase64(file);
-  const base64Data = fileBase64.split("base64,")[1];
+  try {
+    // Convert file to base64
+    const fileBase64 = await convertFileToBase64(file);
+    const base64Data = fileBase64.split("base64,")[1];
 
-  // Make API request
-  const response = await fetch(apiUrl, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ imageBase64: base64Data }),
-  });
+    // Make API request
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ imageBase64: base64Data }),
+    });
 
-  if (!response.ok) {
-    const error = await response.json();
+    if (!response.ok) {
+      const error = await response.json();
 
-    const errorMessage = error.message || "Failed to analyze celebrities.";
+      const errorMessage = error.message || "Failed to analyze celebrities.";
+      return new Error(errorMessage);
+    }
+
+    const content = await response.json();
+
+    return content;
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : "Failed to analyze celebrities.";
     return new Error(errorMessage);
   }
-
-  const content = await response.json();
-
-  return content;
 };
