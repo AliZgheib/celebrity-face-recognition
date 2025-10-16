@@ -7,15 +7,16 @@ import { ErrorMessage } from "./components/ErrorMessage";
 import { ActionButtons } from "./components/ActionButtons";
 import { ResultsModal } from "./components/ResultsModal";
 import { PreviewModal } from "./components/PreviewModal";
-import { useFileUpload } from "./hooks/useFileUpload";
-import { analyzeCelebrities, ApiError } from "./services/api";
+import { analyzeCelebrities } from "./services/api";
 import { CelebritiesData } from "./types/celebrity";
+import { validateFile } from "./utils/fileValidation";
 
 export default function Home() {
-  const { file, previewUrl, error, setError, handleFileChange, reset } =
-    useFileUpload();
+  const [file, setFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const [showResultsModal, setShowResultsModal] = useState(false);
   const [showPreviewModal, setShowPreviewModal] = useState(false);
   const [celebritiesData, setCelebritiesData] =
     useState<CelebritiesData | null>(null);
@@ -27,40 +28,75 @@ export default function Home() {
       return setError("Please select an image file.");
     }
 
-    try {
-      setError(null);
-      setIsLoading(true);
+    setError(null);
+    setIsLoading(true);
 
-      const content = await analyzeCelebrities(file);
-      setCelebritiesData(content);
-      setShowModal(true);
-    } catch (error) {
-      console.error("Error submitting image:", error);
-      
-      if (error instanceof ApiError) {
-        setError(`Failed to analyze image: ${error.message}`);
-      } else {
-        setError("Failed to analyze image. Please try again with a different image.");
-      }
-    } finally {
-      setIsLoading(false);
+    const content = await analyzeCelebrities(file);
+
+    setIsLoading(false);
+
+    if (content instanceof Error) {
+      setError(content.message);
+      return;
     }
+
+    setCelebritiesData(content);
+    setShowResultsModal(true);
   };
 
-  const handleReset = () => {
-    reset();
-    setCelebritiesData(null);
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
+
+    console.log("Selected file:", selectedFile);
+
+    if (!selectedFile) {
+      return;
+    }
+
+    // cleanup existing object url & states
+    if (previewUrl) {
+      URL.revokeObjectURL(previewUrl);
+    }
+
+    setFile(null);
+    setPreviewUrl(null);
+    setError(null);
+
+    const validation = validateFile(selectedFile);
+    if (!validation.isValid) {
+      setError(validation.error || "Invalid file");
+      return;
+    }
+
+    // update object url & states
+    setFile(selectedFile);
+    setPreviewUrl(URL.createObjectURL(selectedFile));
   };
 
-  const handleModalClose = () => {
-    setShowModal(false);
+  const handleFileInputClick = (e: React.MouseEvent<HTMLInputElement>) => {
+    // Reset input value to allow selecting the same file again
+    e.currentTarget.value = "";
   };
 
   const handlePreviewClick = () => {
     setShowPreviewModal(true);
   };
 
-  const handlePreviewClose = () => {
+  const handleReset = () => {
+    if (previewUrl) {
+      URL.revokeObjectURL(previewUrl);
+    }
+    setFile(null);
+    setPreviewUrl(null);
+    setError(null);
+    setCelebritiesData(null);
+  };
+
+  const handleResultsModalClose = () => {
+    setShowResultsModal(false);
+  };
+
+  const handlePreviewModalClose = () => {
     setShowPreviewModal(false);
   };
 
@@ -69,35 +105,38 @@ export default function Home() {
       <div className="card">
         <PageHeader />
 
-        <FileUpload
-          file={file}
-          previewUrl={previewUrl}
-          isLoading={isLoading}
-          onFileChange={handleFileChange}
-          onPreviewClick={handlePreviewClick}
-        />
-
         <form onSubmit={handleSubmit} className="upload-form">
-          <div className="form">
-            {error && <ErrorMessage message={error} />}
-            <ActionButtons
-              isLoading={isLoading}
-              hasFile={!!file}
-              onReset={handleReset}
-            />
-          </div>
+          <FileUpload
+            file={file}
+            previewUrl={previewUrl}
+            isLoading={isLoading}
+            onFileChange={handleFileChange}
+            onFileInputClick={handleFileInputClick}
+            onPreviewClick={handlePreviewClick}
+          />
+
+          {error && <ErrorMessage message={error} />}
+
+          <ActionButtons
+            isLoading={isLoading}
+            hasFile={!!file}
+            onReset={handleReset}
+          />
         </form>
       </div>
 
-      {showModal && celebritiesData && (
-        <ResultsModal data={celebritiesData} onClose={handleModalClose} />
+      {showResultsModal && celebritiesData && (
+        <ResultsModal
+          data={celebritiesData}
+          onClose={handleResultsModalClose}
+        />
       )}
 
       {showPreviewModal && previewUrl && file && (
         <PreviewModal
           imageUrl={previewUrl}
           fileName={file.name}
-          onClose={handlePreviewClose}
+          onClose={handlePreviewModalClose}
         />
       )}
     </div>

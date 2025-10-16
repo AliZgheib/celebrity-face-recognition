@@ -5,6 +5,7 @@ interface FileUploadProps {
   previewUrl: string | null;
   isLoading: boolean;
   onFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onFileInputClick?: (e: React.MouseEvent<HTMLInputElement>) => void;
   onPreviewClick?: () => void;
 }
 
@@ -13,6 +14,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
   previewUrl,
   isLoading,
   onFileChange,
+  onFileInputClick,
   onPreviewClick,
 }) => {
   return (
@@ -90,6 +92,7 @@ export const FileUpload: React.FC<FileUploadProps> = ({
           id="fileID"
           disabled={isLoading}
           onChange={onFileChange}
+          onClick={onFileInputClick}
           className="file-input"
           aria-label="Upload image file"
         />
