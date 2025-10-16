@@ -74,33 +74,6 @@ Before you begin, ensure you have the following installed:
 - `iam:CreateRole`, `iam:AttachRolePolicy`
 - `cloudformation:*`
 
-## 📁 Project Structure
-
-```
-celebrity-face-recognition/
-├── back-end/                 # AWS CDK Backend Infrastructure
-│   ├── bin/                 # CDK app entry point
-│   ├── lib/                 # CDK stack definitions
-│   ├── src/
-│   │   └── rekognition/    # Lambda function code
-│   ├── test/               # Unit tests
-│   ├── cdk.json            # CDK configuration
-│   ├── package.json
-│   └── tsconfig.json
-│
-├── front-end/               # Next.js Frontend Application
-│   ├── app/                # Next.js App Router
-│   │   ├── page.tsx       # Main page component
-│   │   ├── layout.tsx     # Root layout
-│   │   └── globals.css    # Global styles
-│   ├── public/            # Static assets
-│   ├── next.config.ts     # Next.js configuration
-│   ├── package.json
-│   └── tsconfig.json
-│
-└── README.md              # This file
-```
-
 ## 🚀 Getting Started
 
 ### 1. Clone the Repository
