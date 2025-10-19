@@ -38,7 +38,7 @@ const baseHandler = async (event: APIGatewayProxyEvent) => {
   }
 };
 
-const main = async (event: APIGatewayProxyEvent) => {
+export const main = async (event: APIGatewayProxyEvent) => {
   const response = await baseHandler(event);
 
   if (response instanceof Error) {
@@ -61,5 +61,3 @@ const main = async (event: APIGatewayProxyEvent) => {
     statusCode: 200,
   };
 };
-
-module.exports = { main };
