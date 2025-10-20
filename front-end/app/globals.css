@@ -654,11 +654,14 @@ body {
   padding: 1rem;
   background: var(--color-background);
   border-radius: var(--border-radius);
+  min-height: 0; /* Important for flexbox children */
 }
 
 .preview-modal-image {
-  max-width: 100%;
-  max-height: 100%;
+  max-width: calc(100% - 2rem);
+  max-height: calc(100vh - 16rem);
+  width: auto;
+  height: auto;
   object-fit: contain;
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-lg);
